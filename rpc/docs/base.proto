@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package zero;
+option go_package="./zero";
+
+message Empty {}
+
+message IDReq {
+  uint64 id = 1;
+}
+
+message IDsReq {
+  repeated uint64 ids = 1;
+}
+
+message BaseResp {
+  string msg = 1;
+}
+
+message BaseIDResp {
+  uint64 id = 1;
+}
+
+message PageReq {
+  uint64 page = 1;
+  uint64 size = 2;
+}
+
+message PageResp {
+  uint64 total = 1;
+  uint64 page = 2;
+  uint64 size = 3;
+}
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+service Zero {
+  rpc Ping(Request) returns(Response);
+
+  // group: base
+  rpc initDatabase (Empty) returns (BaseResp);
+}

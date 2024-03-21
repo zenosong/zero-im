@@ -1,0 +1,70 @@
+syntax = "v1"
+
+import "base.api"
+
+info (
+	title:  "admin"
+	desc:   ""
+	author: "zeno"
+	email:  "zenosong2022@gmail.com"
+)
+
+type (
+	LoginReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	LoginInfo {
+		Id       int64  `json:"id"`
+		Username string `json:"username"`
+		Token    string `json:"token"`
+		ExpireAt string `json:"expireAt"`
+	}
+	LoginResp {
+		BaseResp
+		Data LoginInfo `json:"data"`
+	}
+)
+
+type (
+	Admin {
+		Id       int64  `json:"id"`
+		Username string `json:"username"`
+		Avatar   string `json:"avatar"`
+	}
+	IndexReq {
+		Username string `json:"username"`
+		PageReq
+	}
+	IndexResp {
+		ListResp
+		Data []Admin `json:"data"`
+	}
+	ShowResp {
+		BaseResp
+		Data Admin `json:"data"`
+	}
+)
+
+@server (
+	group:  admin
+	prefix: /v1
+)
+service admin {
+	@handler Login
+	post /admin/login (LoginReq) returns (LoginResp)
+}
+
+@server (
+	jwt:    Auth
+	group:  admin
+	prefix: /v1
+)
+service admin {
+	@handler Index
+	get /admin (IndexReq) returns (IndexResp)
+
+	@handler Show
+	get /admin/:id returns (ShowResp)
+}
+

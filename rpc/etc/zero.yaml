@@ -1,0 +1,8 @@
+Name: zero.rpc
+ListenOn: 0.0.0.0:8080
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: zero.rpc
+Mysql: &Mysql
+  DSN: "root:oneinstack@tcp(127.0.0.1:3306)/z-chat?charset=utf8mb4&parseTime=true&loc=Local"

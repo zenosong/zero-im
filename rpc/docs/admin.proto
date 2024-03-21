@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package zero;
+option go_package = "./zero";
+
+import "rpc/doc/base.proto";
+
+message AdminInfo {
+  string id = 1;
+  optional string username = 2;
+  optional string nickname = 3;
+  optional string password = 4;
+  optional string email = 6;
+  optional string mobile = 7;
+  optional string avatar = 8;
+  optional int32 status = 9;
+  repeated int64 role_ids = 10;
+  repeated int64 position_ids = 11;
+  repeated string role_codes = 12;
+  repeated string role_name = 13;
+}
+
+message AdminListResp {
+  repeated AdminInfo data = 1;
+  optional int32 total = 2;
+}
+
+message AdminListReq {
+  optional int32 page = 1;
+  optional int32 size = 2;
+  optional string username = 3;
+  optional string nickname = 4;
+  optional string email = 5;
+  optional string mobile = 6;
+  optional int32 status = 7;
+  optional int64 role_id = 8;
+  optional int64 position_id = 9;
+}
+
+service Admin {
+  // Admin service
+  // group: Admin
+  rpc AdminList(AdminListReq) returns (AdminListResp) {}
+  // group: Admin
+  rpc AdminCreate(AdminInfo) returns (BaseIDResp) {}
+  // group: Admin
+  rpc AdminUpdate(AdminInfo) returns (BaseResp) {}
+  // group: Admin
+  rpc AdminDelete(AdminInfo) returns (BaseResp) {}
+  // group: Admin
+  rpc AdminDetail(IDReq) returns (AdminInfo) {}
+}
+
+

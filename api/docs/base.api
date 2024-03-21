@@ -1,0 +1,33 @@
+syntax = "v1"
+
+info (
+	title:  "ZeroIm" // TODO: add title
+	desc:   "" // TODO: add description
+	author: "zeno"
+	email:  "zenosong2022@gmail.com"
+)
+
+type IDReq {
+	ID int `json:"id"`
+}
+
+type IDsReq {
+	IDs []int `json:"ids"`
+}
+
+type PageReq {
+	Page int `json:"page"`
+	Size int `json:"size"`
+}
+
+type BaseResp {
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data,omitempty"`
+}
+
+type ListResp {
+	Total int         `json:"total"`
+	Data  interface{} `json:"data,omitempty"`
+}
+

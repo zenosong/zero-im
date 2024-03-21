@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package zero;
+option go_package = "./zero";
+
+message Empty {}
+
+message IDReq {
+  int64 id = 1;
+}
+
+message IDsReq {
+  repeated int64 ids = 1;
+}
+
+message BaseResp {
+  string msg = 1;
+}
+
+message BaseIDResp {
+  int64 id = 1;
+}
+
+message PageReq {
+  int64 page = 1;
+  int64 size = 2;
+}
+
+message PageResp {
+  int64 total = 1;
+  int64 page = 2;
+  int64 size = 3;
+}
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+message AdminInfo {
+  int64 id = 1;
+  optional string username = 2;
+  optional string nickname = 3;
+  optional string password = 4;
+  optional string email = 6;
+  optional string mobile = 7;
+  optional string avatar = 8;
+  optional int64 group_id = 9;
+  optional bool is_super = 10;
+  optional int32 status = 11;
+  repeated int64 role_ids = 12;
+  repeated string role_codes = 13;
+  repeated string role_name = 14;
+}
+
+message AdminListResp {
+  repeated AdminInfo data = 1;
+  optional int32 total = 2;
+}
+
+message AdminListReq {
+  optional int32 page = 1;
+  optional int32 size = 2;
+  optional string username = 3;
+  optional string nickname = 4;
+  optional string email = 5;
+  optional string mobile = 6;
+  optional int32 status = 7;
+  optional int64 role_id = 8;
+  optional int64 position_id = 9;
+}
+
+service Zero {
+  // Base service
+  rpc Ping(Request) returns(Response);
+
+  rpc InitDatabase (Empty) returns (BaseResp);
+
+  // Admin service
+  rpc AdminList(AdminListReq) returns (AdminListResp) {}
+
+  rpc AdminCreate(AdminInfo) returns (BaseIDResp) {}
+
+  rpc AdminUpdate(AdminInfo) returns (BaseResp) {}
+
+  rpc AdminDelete(AdminInfo) returns (BaseResp) {}
+
+  rpc AdminDetail(IDReq) returns (AdminInfo) {}
+}
